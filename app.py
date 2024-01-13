@@ -27,7 +27,7 @@ api_version = "v3"
 
 # Create app and give it your secret key. Create socketio for dynamic updates
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "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" # Insert your client secret here
+app.config["SECRET_KEY"] = "Insert your client secret here" # Insert your client secret here
 socketio = SocketIO(app)
 
 # Ensure that user is logged into their Youtube account. 
