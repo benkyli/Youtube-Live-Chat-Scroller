@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Scroller
+{% endblock %}
+
+{% block main %}
+    <!-- Get Websocket, jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    
+    <button type="button" name="check" class="btn btn-primary" id="scroll">Start Chat Scrolling</button>
+    <p class="center"> Stop scrolling by typing CTRL+C in the terminal</p>
+    <div id="scroll_container"></div>
+    <script src="{{url_for('static', filename='socket.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,53 @@
+body, main {
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+nav #links {
+    font-family: 'YouTube Sans', sans-serif;
+    font-size: x-large;
+}
+
+/* Centers text */
+.center {
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+#scroll_container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    height: 100%;
+    width: 100%;
+    
+}
+
+.marquee {
+    position: absolute;
+    flex: 0 0 auto;
+    width: 100%;
+    vertical-align: baseline;
+    margin-bottom: 50px;
+}
+
+.marquee span {
+    font-size: 50px;
+    font-weight: bold;
+    white-space: nowrap;
+    position: absolute;
+    width: 100%;
+    animation: scroll 15s linear forwards;
+}
+
+@keyframes scroll {
+    0% {
+        left: 120%;
+    }
+    100% {
+        left: -550%;
+        opacity: 0;
+        display: none;
+    }
+}

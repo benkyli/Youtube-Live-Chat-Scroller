@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Active Chat Check
+{% endblock %}
+
+{% block main %}
+    {% if livechatid %}
+        <h1 class="center">
+            Active live chat found. Your liveChatId is <h2 class="center">{{livechatid}}</h2>
+        </h1>
+        <form class="center" action="/scroller" method="GET">
+            <div class="mb-3">
+                <button type="submit" name="scroll" class="btn btn-primary" style="background-color:darkgreen">Open Chat Scroller</button>
+            </div>
+        </form>
+    {% else %}
+        <h1 class="center">
+            There are no active live chats. Please try again after making the proper adjustments.
+        </h1>
+        <form class="center" action="/activechat" method="GET">
+            <div class="mb-3">
+                <button type="submit" name="check" class="btn btn-primary">Check Active Stream</button>
+            </div>
+        </form>
+    {% endif %}
+
+{% endblock %}
