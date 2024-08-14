@@ -113,17 +113,21 @@ def login():
 def callback():
     # Specify the state when creating the flow in the callback so that it can be
     # verified in the authorization server response.
-    flow = Flow.from_client_secrets_file(
-        client_secrets_file=client_secret,
-        scopes=scopes,
-        state=session["state"], # automatically checks if sessions are the same
-        redirect_uri="http://localhost:5000/callback"
-    )
-    
-    # Use the authorization server's response to fetch the OAuth 2.0 tokens.
-    authorization_response = request.url
-    flow.fetch_token(authorization_response=authorization_response)
-   
+    try:
+        flow = Flow.from_client_secrets_file(
+            client_secrets_file=client_secret,
+            scopes=scopes,
+            state=session["state"], # automatically checks if sessions are the same
+            redirect_uri="http://localhost:5000/callback"
+        )
+        
+        # Use the authorization server's response to fetch the OAuth 2.0 tokens.
+        authorization_response = request.url
+        flow.fetch_token(authorization_response=authorization_response)
+
+    except:
+        return redirect("/login")
+
     # Store credentials in session
     credentials = flow.credentials
     session["credentials"] = {
@@ -176,19 +180,17 @@ def connect():
 
 @socketio.on("scroll")
 def handle_scroll():
-    print("Starting scroll")
-    while True:
-        messages = getMessages()
-        for message in messages:
-            id = message["id"]
-            user = message["authorDetails"]["displayName"]
-            text = message["snippet"]["displayMessage"] # NOTE: Youtube API automatically escapes special characters. Can directly put the response into html 
-            package = {"id": id, "user": user, "message": text}
-            emit("message", package, broadcast = False) # broadcast = false means other users will not get this new data.
-        socketio.sleep(1) # Adjust this to change API call rate. 
+    messages = getMessages()
+    for message in messages:
+        id = message["id"]
+        user = message["authorDetails"]["displayName"]
+        text = message["snippet"]["displayMessage"] # NOTE: Youtube API automatically escapes special characters. Can directly put the response into html 
+        package = {"id": id, "user": user, "message": text}
+        emit("message", package, broadcast = False) # broadcast = false means other users will not get this new data.
+    socketio.sleep(1) # Adjust this to change API call rate. 
 
 
-# Helper functions
+# Helper functions for messages
 def messageRequest(youtube, pageToken):
     request = youtube.liveChatMessages().list(
         liveChatId=session["livechatid"],
