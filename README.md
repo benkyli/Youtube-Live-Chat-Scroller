@@ -23,17 +23,16 @@
 
 ## Editing the Project folder
 * Download the modules in the "requirements.txt" file. You can use a virtual environment if you'd like.
-*  Replace the "client_secret.json" with the client secret JSON you downloaded when creating your OAuth client
-*  On line 30, put your own client secret here. Check the google API console or the client secret file if you are unsure.
-* ***On the final line of the project, make sure the host address matches with the redirect URI you gave your OAuth client.*** 
+* Replace "client_secret.json" with your own secret JSON from your OAuth client.
+* On line 15, ensure that the PATH for your client secret is correct.
+* ***On the final line of the project, make sure the host address matches the redirect URI you gave your OAuth client.*** 
 
 
 ## Using the app
-* If you used a virtual environment, activate it now.
 * Run the app by typing "python app.py". This assumes you did not change the app's name. Otherwise, make sure you run the app using it's correct name.
-* At the login screen, login using the test user account you gave the OAuth client. Grant the app permission to access your YouTube data.
-* Click the "Check Active Stream Button". If you did not have an active stream, start your YouTube stream and click the button again. 
-* If you have an active stream, you will be given a green button to redirect you to the scrolling text screen. 
+* Login using the test user account you gave the OAuth client. Grant the app permission to access your YouTube data.
+* Click the "Check Active Stream Button". If you do not have an active stream, start your YouTube stream and try again.
+* You will be given a green button to redirect you to the scrolling page once a stream is detected.
 * Click the "Start Chat Scrolling" button
 * Any messages typed in your live chat will now appear on the webpage. 
 * Simply press the red button to end scrolling.

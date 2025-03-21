@@ -1,4 +1,5 @@
 import os
+import json
 
 import requests
 from flask import Flask, redirect, render_template, request, session
@@ -9,14 +10,14 @@ from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-# Note about Flow instances: I am not sure if it is correct to create a flow instance in every method, 
-# or if it is better to have a global flow instance. 
 
-# OAuth 2.0 secrets file. When creating a flow instance, this gives the PATH to the file. 
-# If you client secret is in a different folder, change to that PATH instead.
-client_secret = "client_secret.json"
+# This assumes that your client secret is in the parent folder of the project. Change this to a different PATH if you have moved your secret. 
+client_secret_path = "client_secret.json"
+with open(client_secret_path) as secret_file:
+    secret_json = json.load(secret_file)
+    client_secret = secret_json['web']['client_secret']
 
-# OUauth 2.0 access to user account and livestream details. 
+# OAuth 2.0 access to user account and livestream details. 
 scopes = ["https://www.googleapis.com/auth/youtube.readonly",
           "https://www.googleapis.com/auth/youtube",
           "https://www.googleapis.com/auth/youtube.force-ssl"]
@@ -27,7 +28,8 @@ api_version = "v3"
 
 # Create app and give it your secret key. Create socketio for dynamic updates
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "Insert your client secret here" # Insert your client secret here
+
+app.config["SECRET_KEY"] = client_secret
 socketio = SocketIO(app)
 
 # Ensure that user is logged into their Youtube account. 
@@ -96,9 +98,9 @@ def login():
     # Generate url to authorize app to access user's account
     authorization_url, state = flow.authorization_url(
         # Enable offline access so that you can refresh an access token without
-        # re-prompting the user for permission. Recommended for web server apps.
+        # re-prompting the user for permission
         access_type="offline",
-        # Enable incremental authorization. Recommended as a best practice.
+        # Enable incremental authorization
         include_granted_scopes="true")
     
     # Add login to current session
@@ -159,7 +161,7 @@ def revoke():
     status_code = getattr(revoke, 'status_code')
     if status_code == 200:
         # Clear session so user is no longer signed in. 
-        # If making a production app, need more elaborate way to ensure user can't stay on the site without having credentials. 
+        # Production apps should ensure that users cannot bypass this session token. A database will likely be needed instead of using sessions.
         session.clear()
         return('Credentials successfully revoked. <a href="/">Home</a>')
     else:
