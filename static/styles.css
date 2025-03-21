@@ -36,6 +36,7 @@ nav #links {
     font-size: 50px;
     font-weight: bold;
     white-space: nowrap;
+    -webkit-text-stroke: 3px black;
     position: absolute;
     width: 100%;
     animation: scroll 15s linear forwards;

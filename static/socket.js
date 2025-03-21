@@ -43,7 +43,6 @@ socket.on("message", function(details) {
     var height = Math.floor(Math.random() * container.height());
     div.style.bottom = height + "px";
 
-
     // Create insertion point for new message
     var $parent = $('#scroll_container');
     var $children = $parent.children();             // get possible children

@@ -13,9 +13,9 @@ from googleapiclient.discovery import build
 
 # This assumes that your client secret is in the parent folder of the project. Change this to a different PATH if you have moved your secret. 
 client_secret_path = "client_secret.json"
-with open(client_secret_path) as secret_file:
-    secret_json = json.load(secret_file)
-    client_secret = secret_json['web']['client_secret']
+with open(client_secret_path) as file:
+    secret_file = json.load(file)
+    client_secret = secret_file['web']['client_secret']
 
 # OAuth 2.0 access to user account and livestream details. 
 scopes = ["https://www.googleapis.com/auth/youtube.readonly",
@@ -90,7 +90,7 @@ def scroller():
 def login():
     # Create flow instance to manage OAuth 2.0; ensure that redirect uri matches the one you authorized
     flow = Flow.from_client_secrets_file(
-        client_secrets_file=client_secret,
+        client_secrets_file=client_secret_path,
         scopes=scopes,
         redirect_uri="http://localhost:5000/callback"
     )
@@ -117,7 +117,7 @@ def callback():
     # verified in the authorization server response.
     try:
         flow = Flow.from_client_secrets_file(
-            client_secrets_file=client_secret,
+            client_secrets_file=client_secret_path,
             scopes=scopes,
             state=session["state"], # automatically checks if sessions are the same
             redirect_uri="http://localhost:5000/callback"
