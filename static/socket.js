@@ -46,8 +46,8 @@ socket.on("message", function(details) {
     // Create insertion point for new message
     var $parent = $('#scroll_container');
     var $children = $parent.children();             // get possible children
-    var n = $children.length;                       // there are n children
-    var pos = Math.floor((n + 1) * Math.random());  // and n+1 insert points
+    var n = $children.length;                      // there are n children
+    var pos = Math.floor(n * Math.random());  
 
     if (n === pos) {
         $parent.append(div);                        // append after last

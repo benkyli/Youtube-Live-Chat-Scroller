@@ -2,6 +2,7 @@ body, main {
     height: 100vh; 
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 nav #links {
@@ -39,7 +40,7 @@ nav #links {
     -webkit-text-stroke: 3px black;
     position: absolute;
     width: 100%;
-    animation: scroll 15s linear forwards;
+    animation: 6s scroll linear forwards;
 }
 
 @keyframes scroll {
@@ -47,8 +48,7 @@ nav #links {
         left: 120%;
     }
     100% {
-        left: -550%;
-        opacity: 0;
+        left: -150%;
         display: none;
     }
 }
